@@ -6,6 +6,23 @@ import math
 import argparse
 from pathlib import Path
 
+outliers = {
+    "Pt": lambda carga:carga>0,
+    #colocar outras se necessário
+}
+
+
+def clean_charges(cargas: list[tuple[int, str, float]],regras: dict = outliers):
+    valid, invalid = [], []
+    for num, symbol, charge in cargas:
+        regra = regras.get(symbol)
+        if regra is not None and not regra(charge):
+            invalid.append((num, symbol, charge,f"{symbol} violou regra química"))
+        else:
+            valid.append((num, symbol, charge))
+
+    return valid, invalid
+
 def exit():
     sys.exit(0)
 
@@ -96,6 +113,12 @@ def processFolder(folderPath: str) -> tuple[dict, dict, dict, list]:
             lines = f.readlines()
         
         esp_cargas = extract_cargas_ESP(lines)
+        esp_cargas, invalid_esp = clean_charges(esp_cargas)
+        if invalid_esp:
+            print(f"  AVISO: Cargas ESP inválidas em {fname}:")
+            for num, symbol, charge, motivo in invalid_esp:
+                print(f"    Átomo {num} ({symbol}): {charge:.6f} -> {motivo}")
+        
         if esp_cargas:
             esp_data[fname] = esp_cargas
         else:
