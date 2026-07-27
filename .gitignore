@@ -1,2 +1,4 @@
 results/
 cargas/
+__pycache__/
+*.py[cod]
