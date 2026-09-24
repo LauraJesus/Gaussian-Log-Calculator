@@ -1,0 +1,9 @@
+
+Pt          : 1
+Cl          : 2,3
+O_hidroxo   : 4,6
+H_hidroxo   : 5,7
+N_amino     : 8,10
+H_amino     : 9,11-13
+C_metileno  : 14,15
+H_metileno  : 16-19

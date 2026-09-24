@@ -1,4 +1,8 @@
 results/
 cargas/
+cargaschelpg/
+cargasnbo/
+valores/
+referencias/
 __pycache__/
 *.py[cod]
